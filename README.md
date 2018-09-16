@@ -18,3 +18,7 @@ pip3 install --upgrade google-api-python-client
 ## Client Secrets
 
 Create a `client_secrets.py` file in the same folder as the script, but DO NOT add it to Github.
+
+## Disclaimer
+
+Followed the instructions from [here](https://developers.google.com/youtube/v3/guides/uploading_a_video).
