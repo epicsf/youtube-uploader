@@ -1,4 +1,5 @@
+.DS_Store
+*.swp
 client_secrets.json
 uploader.py-oauth2.json
-.DS_Store
 
