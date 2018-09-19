@@ -2,7 +2,7 @@
 
 Epic is migrating its message videos from Vimeo to YouTube.
 
-This [Vimeo Donwloader](https://github.com/epicsf/vimeo-downloader/)
+This [Vimeo Downloader](https://github.com/epicsf/vimeo-downloader/)
 gets all the video IDs/names/descriptions and other metadata,
 and downloads the original video file.
 
