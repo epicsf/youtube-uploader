@@ -5,10 +5,12 @@ python metadata_parser.py --file="../videos/vimeo_export_epicsf_2018-09-03T17091
 '''
 
 def load_file(filename):
+  headers = []
   with open(filename, 'r') as myfile:
-    for line in myfile:
-      print '\n\n ***'
-      print line
+    for i, line in enumerate(myfile):
+      if i == 0:
+        headers = line.split(',')
+        print headers
 
 if __name__ == '__main__':
   argparser = argparse.ArgumentParser()
