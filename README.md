@@ -12,7 +12,8 @@ This takes the message videos and updates them to YouTube using
 ## Dependencies
 
 ```
-pip3 install --upgrade google-api-python-client
+sudo pip install google-api-python-client
+sudo pip install oauth2client
 ```
 
 ## Client Secrets
@@ -22,3 +23,9 @@ Create a `client_secrets.py` file in the same folder as the script, but DO NOT a
 ## Disclaimer
 
 Followed the instructions from [here](https://developers.google.com/youtube/v3/guides/uploading_a_video).
+
+## Running the script
+
+```
+python uploader.py --file="../videos/20180809-284219793/284219793.mp4"
+```
