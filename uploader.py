@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import datetime
 import httplib
 import httplib2
 import os
@@ -92,13 +93,14 @@ def initialize_upload(youtube, options):
 
   body=dict(
     snippet=dict(
-      title=options.title,
-      description=options.description,
-      tags=tags,
-      categoryId=options.category
+      title='Epic church title',
+      description='Epic church description',
+      tags='sunday',
+      categoryId=options.category,
     ),
     status=dict(
-      privacyStatus=options.privacyStatus
+      privacyStatus='private',
+      publishAt='2017-01-01T12:00:00.0Z',
     )
   )
 
