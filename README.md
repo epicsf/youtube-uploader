@@ -22,6 +22,8 @@ https://developers.google.com/youtube/v3/guides/authentication
 
 https://developers.google.com/youtube/registering_an_application
 
+Set up credentials: https://console.cloud.google.com/apis/dashboard?project=epicsfyoutubeuploaded
+
 Create a `client_secrets.py` file in the same folder as the script, but DO NOT add it to Github.
 
 ## Disclaimer
