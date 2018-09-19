@@ -26,6 +26,7 @@ Followed the instructions from [here](https://developers.google.com/youtube/v3/g
 
 ## Running the script
 
+In the same folder as where the `uploader.py` script is:
 ```
 python uploader.py --file="../videos/20180809-284219793/284219793.mp4"
 ```
