@@ -20,6 +20,8 @@ sudo pip install oauth2client
 
 https://developers.google.com/youtube/v3/guides/authentication
 
+https://developers.google.com/youtube/registering_an_application
+
 Create a `client_secrets.py` file in the same folder as the script, but DO NOT add it to Github.
 
 ## Disclaimer
