@@ -1,5 +1,9 @@
 #!/usr/bin/python
 
+'''
+python uploader.py --file="../videos/20180809-284219793/284219793.mp4"
+'''
+
 import datetime
 import httplib
 import httplib2
@@ -86,11 +90,7 @@ def get_authenticated_service(args):
   return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
     http=credentials.authorize(httplib2.Http()))
 
-def initialize_upload(youtube, options):
-  tags = None
-  if options.keywords:
-    tags = options.keywords.split(",")
-
+def initialize_upload(youtube, options, params={}):
   body=dict(
     snippet=dict(
       title='Epic church title',
@@ -158,6 +158,15 @@ def resumable_upload(insert_request):
       print "Sleeping %f seconds and then retrying..." % sleep_seconds
       time.sleep(sleep_seconds)
 
+
+def upload_videos(args):
+  youtube = get_authenticated_service(args)
+  try:
+    initialize_upload(youtube, args)
+  except HttpError, e:
+    print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
+
+
 if __name__ == '__main__':
   argparser.add_argument("--file", required=True, help="Video file to upload")
   argparser.add_argument("--title", help="Video title", default="Test Title")
@@ -175,8 +184,4 @@ if __name__ == '__main__':
   if not os.path.exists(args.file):
     exit("Please specify a valid file using the --file= parameter.")
 
-  youtube = get_authenticated_service(args)
-  try:
-    initialize_upload(youtube, args)
-  except HttpError, e:
-    print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
+  upload_videos(args)

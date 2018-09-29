@@ -11,7 +11,6 @@ def load_file(filename):
   with open(filename, 'r') as csvfile:
     myreader = csv.reader(csvfile, skipinitialspace=True)
     header = myreader.next()
-    print header
     for i, session in enumerate(myreader):
         name = session[1]
         description = session[2]
