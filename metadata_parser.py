@@ -13,7 +13,6 @@ def load_file(filename):
     header = myreader.next()
     print header
     for i, session in enumerate(myreader):
-      if i < 10:
         name = session[1]
         description = session[2]
         privacy = session[7]
@@ -24,7 +23,6 @@ def load_file(filename):
         print 'description: %r' % description
         print 'privacy: %r' % privacy
         print 'tags: %r' % tags
-        print session
 
 
 if __name__ == '__main__':
