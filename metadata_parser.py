@@ -10,8 +10,9 @@ def load_file(filename):
 
   with open(filename, 'r') as csvfile:
     myreader = csv.reader(csvfile, skipinitialspace=True)
-    for row in myreader:
+    for i, row in enumerate(myreader):
       print row
+      print i
 
 if __name__ == '__main__':
   argparser = argparse.ArgumentParser()
