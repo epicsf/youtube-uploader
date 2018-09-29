@@ -17,12 +17,15 @@ def load_file(filename):
         name = session[1]
         description = session[2]
         privacy = session[7]
+        tags = session[9]
 
         print '\n **** '
         print 'name: %r' % name
-        print description
-        print privacy
+        print 'description: %r' % description
+        print 'privacy: %r' % privacy
+        print 'tags: %r' % tags
         print session
+
 
 if __name__ == '__main__':
   argparser = argparse.ArgumentParser()
