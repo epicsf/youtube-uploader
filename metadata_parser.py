@@ -11,8 +11,18 @@ def load_file(filename):
   with open(filename, 'r') as csvfile:
     myreader = csv.reader(csvfile, skipinitialspace=True)
     header = myreader.next()
+    print header
     for i, session in enumerate(myreader):
-      print session
+      if i < 10:
+        name = session[1]
+        description = session[2]
+        privacy = session[7]
+
+        print '\n **** '
+        print 'name: %r' % name
+        print description
+        print privacy
+        print session
 
 if __name__ == '__main__':
   argparser = argparse.ArgumentParser()
