@@ -39,3 +39,7 @@ python uploader.py --file="../videos/20180809-284219793/284219793.mp4"
 ```
 
 While the script is running, check [here](https://www.youtube.com/my_videos) or [here](https://studio.youtube.com/) to monitor progress.
+
+## Setting the publish date
+
+No option for this. See [here](https://productforums.google.com/forum/#!msg/youtube/uaNfcNFHx84/lZ_dJh1nDAAJ).
