@@ -38,4 +38,4 @@ In the same folder as where the `uploader.py` script is:
 python uploader.py --file="../videos/20180809-284219793/284219793.mp4"
 ```
 
-While the script is running, check [here](https://www.youtube.com/my_videos) to monitor progress.
+While the script is running, check [here](https://www.youtube.com/my_videos) or [here](https://studio.youtube.com/) to monitor progress.
