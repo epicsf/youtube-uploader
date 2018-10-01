@@ -9,6 +9,8 @@ and downloads the original video file.
 This takes the message videos and updates them to YouTube using
 [YouTube's API](https://developers.google.com/youtube/v3/guides/uploading_a_video).
 
+[API docs](https://developers.google.com/youtube/v3/docs/videos)
+
 ## Dependencies
 
 ```
