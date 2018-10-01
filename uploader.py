@@ -100,7 +100,6 @@ def initialize_upload(youtube, options, params={}):
     ),
     status=dict(
       privacyStatus='private',
-      publishAt='2017-01-01T12:00:00.0Z',
     )
   )
 
