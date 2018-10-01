@@ -9,6 +9,8 @@ and downloads the original video file.
 This takes the message videos and updates them to YouTube using
 [YouTube's API](https://developers.google.com/youtube/v3/guides/uploading_a_video).
 
+[API docs](https://developers.google.com/youtube/v3/docs/videos)
+
 ## Dependencies
 
 ```
@@ -38,4 +40,8 @@ In the same folder as where the `uploader.py` script is:
 python uploader.py --file="../videos/20180809-284219793/284219793.mp4"
 ```
 
-While the script is running, check [here](https://www.youtube.com/my_videos) to monitor progress.
+While the script is running, check [here](https://www.youtube.com/my_videos) or [here](https://studio.youtube.com/) to monitor progress.
+
+## Setting the publish date
+
+No option for this. See [here](https://productforums.google.com/forum/#!msg/youtube/uaNfcNFHx84/lZ_dJh1nDAAJ).
