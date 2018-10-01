@@ -95,6 +95,7 @@ def initialize_upload(youtube, options, params={}):
     snippet=dict(
       title='Epic church title',
       description='Epic church description',
+      publishedAt='2018-01-01T12:00:00.0Z',
       tags='sunday',
       categoryId=options.category,
     ),
