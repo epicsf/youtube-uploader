@@ -44,4 +44,6 @@ While the script is running, check [here](https://www.youtube.com/my_videos) or 
 
 ## Setting the publish date
 
+stuff to save: tags, privacy setting, and upload date
+
 No option for this. See [here](https://productforums.google.com/forum/#!msg/youtube/uaNfcNFHx84/lZ_dJh1nDAAJ).
