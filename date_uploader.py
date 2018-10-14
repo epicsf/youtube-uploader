@@ -172,8 +172,10 @@ def upload_videos(args):
       description = session[2]
       privacy = session[7]
       tags = session[9]
+      uri = session[0]
       print '\n **** '
       print 'tags: %r' % tags
+      print uri
 
   return
 
