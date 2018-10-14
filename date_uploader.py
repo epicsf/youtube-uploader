@@ -1,9 +1,10 @@
 #!/usr/bin/python
 
 '''
-python date_uploader.py --file="../videos/20180809-284219793/284219793.mp4"
+python date_uploader.py --file="../videos/vimeo_export_epicsf_2018-09-03T170913-0700.csv" --videos="../videos/"
 '''
 
+import csv
 import datetime
 import httplib
 import httplib2
@@ -15,6 +16,7 @@ import time
 from apiclient.discovery import build
 from apiclient.errors import HttpError
 from apiclient.http import MediaFileUpload
+from dateutil import parser
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.file import Storage
 from oauth2client.tools import argparser, run_flow
@@ -161,6 +163,25 @@ def resumable_upload(insert_request):
 
 def upload_videos(args):
   youtube = get_authenticated_service(args)
+
+  header = []
+  with open(args.file, 'r') as csvfile:
+    myreader = csv.reader(csvfile, skipinitialspace=True)
+    header = myreader.next()
+    for i, session in enumerate(myreader):
+      name = session[1]
+      description = session[2]
+      privacy = session[7]
+      tags = session[9]
+      uri = session[0]
+      created_time = parser.parse(session[5])
+      print '\n **** '
+      print 'tags: %r' % tags
+      print uri
+      print created_time
+
+  return
+
   try:
     initialize_upload(youtube, args)
   except HttpError, e:
@@ -168,17 +189,8 @@ def upload_videos(args):
 
 
 if __name__ == '__main__':
-  argparser.add_argument("--file", required=True, help="Video file to upload")
-  argparser.add_argument("--title", help="Video title", default="Test Title")
-  argparser.add_argument("--description", help="Video description",
-    default="Test Description")
-  argparser.add_argument("--category", default="22",
-    help="Numeric video category. " +
-      "See https://developers.google.com/youtube/v3/docs/videoCategories/list")
-  argparser.add_argument("--keywords", help="Video keywords, comma separated",
-    default="")
-  argparser.add_argument("--privacyStatus", choices=VALID_PRIVACY_STATUSES,
-    default=VALID_PRIVACY_STATUSES[0], help="Video privacy status.")
+  argparser.add_argument("--file", required=True, help="Metadata file")
+  argparser.add_argument("--videos", required=True, help="Videos folder")
   args = argparser.parse_args()
 
   if not os.path.exists(args.file):
