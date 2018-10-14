@@ -165,7 +165,7 @@ def upload_videos(args):
   metadata_filename = args.file
   print metadata_filename
 
-  # break
+  return
 
   try:
     initialize_upload(youtube, args)
