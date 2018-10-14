@@ -4,6 +4,7 @@
 python date_uploader.py --file="../videos/vimeo_export_epicsf_2018-09-03T170913-0700.csv" --videos="../videos/"
 '''
 
+import csv
 import datetime
 import httplib
 import httplib2
@@ -162,8 +163,17 @@ def resumable_upload(insert_request):
 def upload_videos(args):
   youtube = get_authenticated_service(args)
 
-  metadata_filename = args.file
-  print metadata_filename
+  header = []
+  with open(args.file, 'r') as csvfile:
+    myreader = csv.reader(csvfile, skipinitialspace=True)
+    header = myreader.next()
+    for i, session in enumerate(myreader):
+      name = session[1]
+      description = session[2]
+      privacy = session[7]
+      tags = session[9]
+      print '\n **** '
+      print 'tags: %r' % tags
 
   return
 
