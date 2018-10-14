@@ -16,6 +16,7 @@ import time
 from apiclient.discovery import build
 from apiclient.errors import HttpError
 from apiclient.http import MediaFileUpload
+from dateutil import parser
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.file import Storage
 from oauth2client.tools import argparser, run_flow
@@ -173,7 +174,7 @@ def upload_videos(args):
       privacy = session[7]
       tags = session[9]
       uri = session[0]
-      created_time = session[5]
+      created_time = parser.parse(session[5])
       print '\n **** '
       print 'tags: %r' % tags
       print uri
