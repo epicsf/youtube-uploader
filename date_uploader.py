@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 '''
-python date_uploader.py --file="../videos/20180809-284219793/284219793.mp4"
+python date_uploader.py --file="../videos/vimeo_export_epicsf_2018-09-03T170913-0700.csv" --videos="../videos/"
 '''
 
 import datetime
@@ -161,6 +161,12 @@ def resumable_upload(insert_request):
 
 def upload_videos(args):
   youtube = get_authenticated_service(args)
+
+  metadata_filename = args.file
+  print metadata_filename
+
+  # break
+
   try:
     initialize_upload(youtube, args)
   except HttpError, e:
@@ -168,17 +174,8 @@ def upload_videos(args):
 
 
 if __name__ == '__main__':
-  argparser.add_argument("--file", required=True, help="Video file to upload")
-  argparser.add_argument("--title", help="Video title", default="Test Title")
-  argparser.add_argument("--description", help="Video description",
-    default="Test Description")
-  argparser.add_argument("--category", default="22",
-    help="Numeric video category. " +
-      "See https://developers.google.com/youtube/v3/docs/videoCategories/list")
-  argparser.add_argument("--keywords", help="Video keywords, comma separated",
-    default="")
-  argparser.add_argument("--privacyStatus", choices=VALID_PRIVACY_STATUSES,
-    default=VALID_PRIVACY_STATUSES[0], help="Video privacy status.")
+  argparser.add_argument("--file", required=True, help="Metadata file")
+  argparser.add_argument("--videos", required=True, help="Videos folder")
   args = argparser.parse_args()
 
   if not os.path.exists(args.file):
