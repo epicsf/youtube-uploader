@@ -166,6 +166,11 @@ def format_date(created_time):
   naive_time = parsed_time.replace(tzinfo=None)
   return naive_time - datetime.timedelta(hours=8) # pacific tz offset from UTC
 
+def get_folder_name(created_time, uri):
+  date_slug = created_time.strftime('%Y%m%d')
+  uri_slug = uri.split('/')[2]
+  return date_slug + '_' + uri_slug
+
 def upload_videos(args):
   youtube = get_authenticated_service(args)
   pacific_tz = pytz.timezone('US/Pacific')
@@ -181,10 +186,12 @@ def upload_videos(args):
       tags = session[9]
       uri = session[0]
       created_time = format_date(session[5])
+      folder_name = get_folder_name(created_time, uri)
       print '\n **** '
       print 'tags: %r' % tags
       print uri
       print created_time
+      print folder_name
 
   return
 
