@@ -10,6 +10,7 @@ import httplib
 import httplib2
 import os
 import random
+import pytz
 import sys
 import time
 
@@ -160,9 +161,14 @@ def resumable_upload(insert_request):
       print "Sleeping %f seconds and then retrying..." % sleep_seconds
       time.sleep(sleep_seconds)
 
+def format_date(created_time):
+  parsed_time = parser.parse(created_time)
+  naive_time = parsed_time.replace(tzinfo=None)
+  return naive_time - datetime.timedelta(hours=8) # pacific tz offset from UTC
 
 def upload_videos(args):
   youtube = get_authenticated_service(args)
+  pacific_tz = pytz.timezone('US/Pacific')
 
   header = []
   with open(args.file, 'r') as csvfile:
@@ -174,7 +180,7 @@ def upload_videos(args):
       privacy = session[7]
       tags = session[9]
       uri = session[0]
-      created_time = parser.parse(session[5])
+      created_time = format_date(session[5])
       print '\n **** '
       print 'tags: %r' % tags
       print uri
