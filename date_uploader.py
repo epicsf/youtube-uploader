@@ -171,6 +171,10 @@ def get_folder_name(created_time, uri):
   uri_slug = uri.split('/')[2]
   return date_slug + '_' + uri_slug
 
+def get_video_name(uri):
+  uri_slug = uri.split('/')[2]
+  return uri_slug + '.mp4'
+
 def upload_videos(args):
   youtube = get_authenticated_service(args)
   pacific_tz = pytz.timezone('US/Pacific')
@@ -187,11 +191,13 @@ def upload_videos(args):
       uri = session[0]
       created_time = format_date(session[5])
       folder_name = get_folder_name(created_time, uri)
+      video_name = get_video_name(uri)
       print '\n **** '
       print 'tags: %r' % tags
       print uri
       print created_time
       print folder_name
+      print video_name
 
   return
 
