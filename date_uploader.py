@@ -93,14 +93,14 @@ def get_authenticated_service(args):
   return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
     http=credentials.authorize(httplib2.Http()))
 
-def initialize_upload(youtube, options, params={}):
+def initialize_upload(youtube, created_time, video_name):
   body=dict(
     snippet=dict(
       title='Epic church title',
       description='Epic church description',
       publishedAt='2018-01-01T12:00:00.0Z',
       tags='sunday',
-      categoryId=options.category,
+      # categoryId=category,
     ),
     status=dict(
       privacyStatus='private',
@@ -122,7 +122,7 @@ def initialize_upload(youtube, options, params={}):
     # practice, but if you're using Python older than 2.6 or if you're
     # running on App Engine, you should set the chunksize to something like
     # 1024 * 1024 (1 megabyte).
-    media_body=MediaFileUpload(options.file, chunksize=-1, resumable=True)
+    media_body=MediaFileUpload(video_name, chunksize=-1, resumable=True)
   )
 
   resumable_upload(insert_request)
@@ -169,7 +169,7 @@ def format_date(created_time):
 def get_folder_name(created_time, uri):
   date_slug = created_time.strftime('%Y%m%d')
   uri_slug = uri.split('/')[2]
-  return date_slug + '_' + uri_slug
+  return date_slug + '-' + uri_slug
 
 def get_video_name(uri):
   uri_slug = uri.split('/')[2]
@@ -200,6 +200,7 @@ def upload_videos(args):
       created_time = format_date(session[5])
       folder_name = get_folder_name(created_time, uri)
       video_name = get_video_name(uri)
+      file_name = '../videos/' + folder_name + '/' + video_name 
       print '\n **** '
       print 'tags: %r' % tags
       print uri
@@ -207,12 +208,12 @@ def upload_videos(args):
       print folder_name
       print video_name
 
-  return
-
-  try:
-    initialize_upload(youtube, args)
-  except HttpError, e:
-    print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
+      youtube = get_authenticated_service(args)
+      try:
+        if folder_name in ['20180809-284219793', '20180826-286807814']:
+          initialize_upload(youtube, created_time, file_name)
+      except HttpError, e:
+        print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
 
 
 if __name__ == '__main__':
