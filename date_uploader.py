@@ -208,9 +208,9 @@ def upload_videos(args):
       print folder_name
       print video_name
 
-      youtube = get_authenticated_service(args)
       try:
         if folder_name in ['20180809-284219793', '20180826-286807814']:
+          youtube = get_authenticated_service(args)
           initialize_upload(youtube, created_time, file_name)
       except HttpError, e:
         print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
