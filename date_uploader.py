@@ -93,15 +93,9 @@ def get_authenticated_service(args):
   return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
     http=credentials.authorize(httplib2.Http()))
 
-def initialize_upload(youtube, created_time, video_name):
+def initialize_upload(youtube, created_time, video_name, params):
   body=dict(
-    snippet=dict(
-      title='Epic church title',
-      description='Epic church description',
-      publishedAt='2018-01-01T12:00:00.0Z',
-      tags='sunday',
-      # categoryId=category,
-    ),
+    snippet=params,
     status=dict(
       privacyStatus='private',
     )
@@ -200,18 +194,24 @@ def upload_videos(args):
       created_time = format_date(session[5])
       folder_name = get_folder_name(created_time, uri)
       video_name = get_video_name(uri)
-      file_name = '../videos/' + folder_name + '/' + video_name 
+      file_name = '../videos/' + folder_name + '/' + video_name
       print '\n **** '
       print 'tags: %r' % tags
       print uri
-      print created_time
+      print created_time.strftime('%Y-%m-%dT%H:%M:%S.0Z')
       print folder_name
       print video_name
+      params = {
+        'title': name,
+        'description': description,
+        'publishedAt': created_time.strftime('%Y-%m-%dT%H:%M:%S.0Z'),
+        'tags': tags,
+      }
 
       try:
         if folder_name in ['20180809-284219793', '20180826-286807814']:
           youtube = get_authenticated_service(args)
-          initialize_upload(youtube, created_time, file_name)
+          initialize_upload(youtube, created_time, file_name, params)
       except HttpError, e:
         print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
 
