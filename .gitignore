@@ -1,5 +1,10 @@
 .DS_Store
 *.swp
-client_secrets.json
+client_secret.json
+api_key.py
 uploader.py-oauth2.json
+videos/*
+__pycache__/*
+*/__pycache__/*
+vimeo-export.csv
 

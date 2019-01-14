@@ -14,8 +14,8 @@ This takes the message videos and updates them to YouTube using
 ## Dependencies
 
 ```
-sudo pip install google-api-python-client
-sudo pip install oauth2client
+pip install google-api-python-client
+pip install oauth2client
 ```
 
 ## Client Secrets
