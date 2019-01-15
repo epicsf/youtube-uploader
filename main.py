@@ -29,8 +29,8 @@ def get_video_category(video):
 
 def format_video_data(video, videosdir):
 	return {
-		'categoryId': get_video_category(29),
-		'defaultLanguage': '',
+		'categoryId': get_video_category(video),
+		'defaultLanguage': 'English',
 		'description': video['description'],
 		'filepath': get_videofile_path(video, videosdir),
 		'privacyStatus': get_privacy_status(video),
@@ -38,8 +38,17 @@ def format_video_data(video, videosdir):
 		'title': video['name'],
 	}
 
+def is_uploaded(filepath):
+	try:
+		open('/'.join(filepath.split('/')[:-1] + ['.complete']))
+		return True
+	except FileNotFoundError:
+		return False
+
+def mark_uploaded(filepath):
+	open('/'.join(filepath.split('/')[:-1] + ['.complete']), 'w')
+
 def parse_and_upload_csv(youtube, file, videosdir, limit, offset):
-	count = 1
 	videos = []
 	for f in file:
 		with open(f, 'r') as csvfile:
@@ -52,11 +61,16 @@ def parse_and_upload_csv(youtube, file, videosdir, limit, offset):
 		format_video_data(v, videosdir) 
 	for v in sorted(videos, key=lambda video: video['release_time'])]
 
-	youtube = get_authenticated_service()
+	offset_count = 0
 	count = 0
 	for video in videos:
-		if count < limit:
-			upload_video(youtube, SimpleNamespace(**video))
+		if offset_count < offset:
+			print('OFFSET')
+			offset_count += 1
+		elif count < limit:
+			if not is_uploaded(video['filepath']):
+				upload_video(youtube, SimpleNamespace(**video))
+				mark_uploaded(video['filepath'])
 			count += 1
 		else:
 			break
@@ -66,7 +80,7 @@ if __name__ == '__main__':
   argparser.add_argument("--file", action='append', required=True, help="CSV file to read")
   argparser.add_argument("--videosdir", required=True, help="directory to videos")
   argparser.add_argument("--limit", default=inf, type=int, help="number of videos to upload")
-  argparser.add_argument("--offset", default=0, help="number of videos to skip")
+  argparser.add_argument("--offset", default=0, type=int, help="number of videos to skip")
   args = argparser.parse_args()
 
   youtube = get_authenticated_service()

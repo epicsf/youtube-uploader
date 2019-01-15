@@ -1,7 +1,7 @@
 .DS_Store
 *.swp
 client_secret.json
-api_key.py
+refresh_token.txt
 uploader.py-oauth2.json
 videos/*
 __pycache__/*

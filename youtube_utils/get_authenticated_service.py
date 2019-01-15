@@ -5,8 +5,12 @@ import os
 import random
 import time
 
-from api_key import API_KEY
+import oauth2client
 from apiclient.discovery import build
+import google.oauth2.credentials
+import google_auth_oauthlib.flow
+from googleapiclient.discovery import build
+from google_auth_oauthlib.flow import InstalledAppFlow
 
 
 # The CLIENT_SECRETS_FILE variable specifies the name of a file that contains
@@ -27,10 +31,58 @@ SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
 API_SERVICE_NAME = 'youtube'
 API_VERSION = 'v3'
 
+def get_refresh_token():
+	try:
+		with open('./refresh_token.txt') as f:
+			for l in f:
+				return l
+	except FileNotFoundError:
+		return None
+
+def set_refresh_token(token):
+	try:
+		with open('./refresh_token.txt', 'w') as f:
+			f.write(token)
+	except FileNotFoundError:
+		return None
+
+def get_api_token():
+	try:
+		with open('./api_token.txt') as f:
+			for l in f:
+				return l
+	except FileNotFoundError:
+		return None
+
+def set_api_token(token):
+	try:
+		with open('./api_token.txt', 'w') as f:
+			f.write(token)
+	except FileNotFoundError:
+		return None
+
 # Authorize the request and store authorization credentials.
 def get_authenticated_service():
-  return build(
-    API_SERVICE_NAME,
-    API_VERSION,
-    developerKey=API_KEY,
-  )
+	flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
+	refresh_token = get_refresh_token()
+	if refresh_token:
+		credentials = oauth2client.client.GoogleCredentials(
+			None,
+			flow.client_config['client_id'],
+			flow.client_config['client_secret'],
+      refresh_token,
+      None,
+      'https://accounts.google.com/o/oauth2/token',
+      None,
+    )
+		http = credentials.authorize(httplib2.Http())
+		credentials.refresh(http)
+		set_refresh_token(credentials.refresh_token)
+	else:
+		credentials = flow.run_console()
+		set_refresh_token(credentials.refresh_token)
+	return build(
+		API_SERVICE_NAME,
+		API_VERSION,
+		credentials=credentials,
+	)
