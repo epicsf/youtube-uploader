@@ -1,49 +1,45 @@
-# youtube-uploader
+# Youtube Uploader
 
-Epic is migrating its message videos from Vimeo to YouTube.
+This python script is the second of two scripts for transferring videos from Vimeo to Youtube. The first can be found [here](https://github.com/epicsf/vimeo-downloader/).
 
-This [Vimeo Downloader](https://github.com/epicsf/vimeo-downloader/)
-gets all the video IDs/names/descriptions and other metadata,
-and downloads the original video file.
+## Notes
 
-This takes the message videos and updates them to YouTube using
-[YouTube's API](https://developers.google.com/youtube/v3/guides/uploading_a_video).
+This script is based off of the Youtube examples found [here](https://github.com/youtube/api-samples/blob/master/python/upload_video.py).
 
-[API docs](https://developers.google.com/youtube/v3/docs/videos)
+Youtube API Docs can be found [here](https://developers.google.com/youtube/v3/docs/videos).
 
-## Dependencies
+## Setup
 
-```
-pip install google-api-python-client
-pip install oauth2client
-```
+This script has been written and tested with Python version 3.7.
 
-## Client Secrets
+To install:
 
-https://developers.google.com/youtube/v3/guides/authentication
+#### 1. Install Dependencies
+Run `pip install -r requirements.txt`.
 
-https://developers.google.com/youtube/registering_an_application
+#### 2. Create Client Secrets
+1. Go to [https://console.developers.google.com](https://console.developers.google.com/) and, if necessary, create a new project. If creating a new project, make sure to also set up the OAuth consent screen.
+2. Click on "ENABLE APIS AND SERVICES" and search for (and enable) "Youtube Data API v3".
+3. In the project, create an "OAuth client ID" credential and download the created JSON file
+4. Name the file "client_secret.json" and place in the root level of the repository
 
-Set up credentials: https://console.cloud.google.com/apis/dashboard?project=epicsfyoutubeuploaded
-Used http://localhost:8080/ as the Redirect URL
-
-Create a `client_secrets.py` file in the same folder as the script, but DO NOT add it to Github.
-
-## Disclaimer
-
-Followed the instructions from [here](https://developers.google.com/youtube/v3/guides/uploading_a_video).
 
 ## Running the script
 
-In the same folder as where the `uploader.py` script is:
+*Note:* This script keeps track of which videos it has uploaded before by adding a `.complete` file in the video directory of videos it has uploaded.
+To re-upload videos, delete the `.complete` file.
+
+To run the script, run:
 ```
-python uploader.py --file="../videos/20180809-284219793/284219793.mp4"
+python main.py --file <path/to/csv/file.csv> --videosdir <path/to/videos/directory>
 ```
+
+The script takes the following arguments
+`--file` - The location of the csv file paths. Multiple files can be specified.
+					 The script will combine all the csv files and sort them by release date.
+`--videosdir` - The directory where the videos are stored. Only one source directory is allowed.
+`--limit` (Optional) - The number of videos to upload.
+`--offset` (Optional) - The number of videos to skip initially.
 
 While the script is running, check [here](https://www.youtube.com/my_videos) or [here](https://studio.youtube.com/) to monitor progress.
 
-## Setting the publish date
-
-stuff to save: tags, privacy setting, and upload date
-
-No option for this. See [here](https://productforums.google.com/forum/#!msg/youtube/uaNfcNFHx84/lZ_dJh1nDAAJ).
